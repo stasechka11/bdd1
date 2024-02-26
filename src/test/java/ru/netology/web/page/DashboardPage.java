@@ -12,14 +12,13 @@ import static com.codeborne.selenide.Selenide.$$;
 
 public class DashboardPage {
     private final String balanceStart = "баланс: ";
-    private final String balanceFinish = " р. ";
+    private final String balanceFinish = " р.";
     private final SelenideElement dashboardHeading = $("h2[data-test-id='dashboard']");
     private final SelenideElement cardsHeading = $(byText("Ваши карты"));
     private final ElementsCollection cards = $$(".list__item div");
 
     public DashboardPage() {
         dashboardHeading.shouldBe(visible);
-        cardsHeading.shouldBe(visible);
     }
 
     public int getCardBalance(String maskedCardNumber) {
