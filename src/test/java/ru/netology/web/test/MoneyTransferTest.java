@@ -70,4 +70,15 @@ public class MoneyTransferTest {
                 () -> assertEquals(secondCardBalance, actualBalanceSecondCard));
     }
 
+    @Test
+    void shouldGetErrorMessageIfTransferAmountNull() {
+        var transferPage = dashboardPage.selectCardToTransfer(secondCardInfo);
+        transferPage.makeTransfer("0", firstCardInfo);
+        transferPage.findErrorMessage("Сумма перевода не может быть нулевой");
+        var actualBalanceFirstCard = dashboardPage.getCardBalance(getMaskedCardNumber(firstCardInfo.getCardNumber()));
+        var actualBalanceSecondCard = dashboardPage.getCardBalance(getMaskedCardNumber(secondCardInfo.getCardNumber()));
+        assertAll(() -> assertEquals(firstCardBalance, actualBalanceFirstCard),
+                () -> assertEquals(secondCardBalance, actualBalanceSecondCard));
+    }
+
 }
