@@ -81,4 +81,15 @@ public class MoneyTransferTest {
                 () -> assertEquals(secondCardBalance, actualBalanceSecondCard));
     }
 
+    @Test
+    void shouldGetErrorMessageIfTransferToSameCard() {
+        var amount = generateValidAmount(firstCardBalance);
+        var transferPage = dashboardPage.selectCardToTransfer(firstCardInfo);
+        transferPage.makeTransfer(String.valueOf(amount), firstCardInfo);
+        transferPage.findErrorMessage("Карта перевода не может быть той же, что и карта списания");
+        var actualBalanceFirstCard = dashboardPage.getCardBalance(getMaskedCardNumber(firstCardInfo.getCardNumber()));
+        var actualBalanceSecondCard = dashboardPage.getCardBalance(getMaskedCardNumber(secondCardInfo.getCardNumber()));
+        assertAll(() -> assertEquals(firstCardBalance, actualBalanceFirstCard),
+                () -> assertEquals(secondCardBalance, actualBalanceSecondCard));
+    }
 }
